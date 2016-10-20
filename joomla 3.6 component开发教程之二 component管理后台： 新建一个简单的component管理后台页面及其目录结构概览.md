@@ -2,9 +2,9 @@
 #component部分的目录结构概览
 <pre>
 com_publish/  
-├── admin  
-├── publish.xml  
-└── site  
+├── <b>admin</b>  
+├── <b>publish.xml</b> 
+└── <b>site</b> 
     ├── publish.php  
     └── views  
         └── publish  
@@ -12,3 +12,7 @@ com_publish/
             │   └── default.php  
             └── view.html.php  
 </pre>
+
+**admin目录**  
+**site目录**  
+**publish.xml**  
