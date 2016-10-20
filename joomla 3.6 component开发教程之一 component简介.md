@@ -89,7 +89,7 @@ joomla根目录
 >博主将尽可能用上joomla中component相关的所有技术
 
 功能需求明确之后，本系列教程实操部分的结构大致如下（在最终版本前随时可能修改或者增删）：
-## 1. component管理后台： 新建一个简单的component管理后台页面及其目录结构概览
+## 1. component管理后台： 新建一个简单的component前台（site）页面及其目录结构概览
 ## 2. component管理后台： 创建不同的layout页面
 ## 3. component管理后台： controller 与 子controller
 ## 4. component管理后台： 数据界限——创建多个model类

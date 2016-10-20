@@ -1,5 +1,5 @@
-#新建一个简单的component管理后台页面
-#component部分的目录结构概览
+#新建一个简单的component前台（site）页面
+##component部分的目录结构概览
 <pre>
 com_publish/  
 ├── <b>admin</b>  
@@ -13,6 +13,9 @@ com_publish/
             └── view.html.php  
 </pre>
 
-**admin目录**  
-**site目录**  
-**publish.xml**  
+###admin目录
+###site目录  
+###publish.xml
+##site目录初探
+###component入口：publish.php
+###views目录
