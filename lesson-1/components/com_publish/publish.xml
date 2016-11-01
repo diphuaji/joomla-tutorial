@@ -1,1 +1,51 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="component" version="3.2.0" method="upgrade">
+
+	<name>Publish</name>
+	<!-- 下面几条信息是关于本安装包作者及其相关许可信息，可有可无，仅仅起到说明作用 -->
+	<creationDate>July 2016</creationDate>
+	<author>diphuaji</author>
+	<authorEmail>diphuaji@yandex.com</authorEmail>
+	<authorUrl>https://github.com/diphuaji/joomla-tutorial</authorUrl>
+	<copyright>Drop a reference to the above link ^_^</copyright>
+	<license>None</license>
+	<!--  该版本号会在首次安装或更新时存入jooma的component数据库中 -->
+	<version>0.0.1</version>
+	<!-- 此component的描述，可有可无，一般默认为component的名称 -->
+	<description>教学用component</description>
+
+	<update> <!-- 用于该component更新的sql文件; New since J2.5 -->
+		<schemas>
+			<schemapath type="mysql">sql/updates/mysql</schemapath>
+		</schemas>
+	</update>
+
+	<!-- 下面的files实际上就是site部分所包含的文件及其文件夹（相对于folder属性所指定目录而言） -->
+	<!-- 注意下面的files元素中的folder属性: 该属性的值就是site部分所包含文件或者文件夹所在的目录，
+		可以看到，site目录下的文件和文件名会在安装的时候被复制到joomla中，当然此处取名site只是为了
+		方便记忆，当然你也可以起名为mysite，只要jooma能在相应的目录中找到下列文件或文件夹即可 -->
+	<files folder="site">
+		<filename>index.html</filename>
+		<filename>publish.php</filename>
+		<filename>controller.php</filename>
+		<folder>views</folder>
+		<folder>models</folder>
+		<folder>controllers</folder>
+	</files>
+
+	<!-- 下面的files实际上就是admin部分（即网站后台部分）所包含的文件及其文件夹（相对于folder属性所指定目录而言） --> 
+	<administration>
+		<!-- 该component后台部分的链接地址，务必填写正确 -->
+		<menu link='index.php?option=com_publish'>publish</menu>
+		<!-- admin部分所包含的文件及其目录 -->
+		<!-- 同样可以看到admin部分也包含files元素，填写格式与site部分一样，不再赘述 -->
+		<files folder="admin">
+			<!-- Admin Main File Copy Section -->
+			<filename>index.html</filename>
+			<filename>publish.php</filename>
+			<!-- sql文件的存放位置，此component的更新sql就存放于该目录中 -->
+			<folder>sql</folder>
+		</files>
+	</administration>
+
+</extension>

@@ -36,7 +36,6 @@ ikoDotA的博文教程中对于M、V、C三部分所涉文件夹以及文件的�
 
 #component的目录结构
 为了防止出现一脸懵逼的情况（博主刚开始接触的时候就是这种状态），这里简单介绍下component在Joomla根目录中的相对位置：
-
 joomla根目录  
 ├── **administrator**  
 │   ├── cache  
@@ -88,11 +87,11 @@ joomla根目录
 >博主将尽可能用上joomla中component相关的所有技术
 
 功能需求明确之后，本系列教程实操部分的结构大致如下（在最终版本前随时可能修改或者增删）：
-## 1. component管理后台： 新建一个简单的component管理后台页面及其目录结构概览
-## 2. component管理后台： 创建不同的layout页面
-## 3. component管理后台： controller 与 子controller
-## 4. component管理后台： 数据界限——创建多个model类
-## 5. component外部网站： 与administrator类似的开发逻辑
+## 1. component外部网站： 新建一个简单的新建一个简单的外部页面（site）及其目录结构概览
+## 2. component外部网站： 创建不同的layout页面
+## 3. component外部网站： controller 与 子controller
+## 4. component外部网站： 数据界限——创建多个model类
+## 5. component管理后台： 与site结构类似的开发逻辑
 
 #参考文献
 * [ikoDotA の BLOG](http://www.cnblogs.com/ikodota)
