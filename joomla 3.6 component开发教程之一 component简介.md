@@ -87,11 +87,11 @@ joomla根目录
 >博主将尽可能用上joomla中component相关的所有技术
 
 功能需求明确之后，本系列教程实操部分的结构大致如下（在最终版本前随时可能修改或者增删）：
-## 1. component外部网站： 新建一个简单的新建一个简单的外部页面（site）及其目录结构概览
-## 2. component外部网站： 创建不同的layout页面
-## 3. component外部网站： controller 与 子controller
-## 4. component外部网站： 数据界限——创建多个model类
-## 5. component管理后台： 与site结构类似的开发逻辑
+## 1. component外部网站(site)： 新建一个简单的新建一个简单的外部页面（site）及其目录结构概览
+## 2. component外部网站(site)： 创建不同的layout页面
+## 3. component外部网站(site)： controller 与 子controller
+## 4. component外部网站(site)： 数据界限——创建多个model类
+## 5. component管理后台(admin)： 与site结构类似的开发逻辑
 
 #参考文献
 * [ikoDotA の BLOG](http://www.cnblogs.com/ikodota)
