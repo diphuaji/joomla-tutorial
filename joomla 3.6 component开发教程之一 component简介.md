@@ -36,7 +36,8 @@ ikoDotA的博文教程中对于M、V、C三部分所涉文件夹以及文件的�
 
 #component的目录结构
 为了防止出现一脸懵逼的情况（博主刚开始接触的时候就是这种状态），这里简单介绍下component在Joomla根目录中的相对位置：
-joomla根目录  
+joomla根目录   
+<pre>
 ├── **administrator**  
 │   ├── cache  
 │   │   └── index.html  
@@ -68,7 +69,7 @@ joomla根目录
 ├── templates  
 ├── tmp  
 └── web.config.txt  
-
+</pre>
 以上就是本人测试环境下的joomla目录结构，可以看到每个component都对应了两套代码（暂且用这个词吧，或者可以叫做应用场景？如图中的加粗部分），分别对应管理后台（网站域名/administrator，非管理员无法登录查看）与外部网站（所有人可见）。
 
 其中管理后台部分的代码在administrator/components下，而外部网站部分代码则是直接位于components目录下；另外本教程涉及到的重要目录还有language目录，用于处理多语言需求。
