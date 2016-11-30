@@ -41,10 +41,10 @@
 		<!-- 同样可以看到admin部分也包含files元素，填写格式与site部分一样，不再赘述 -->
 		<files folder="admin">
 			<!-- Admin Main File Copy Section -->
-			<filename>index.html</filename>
-			<filename>publish.php</filename>
+			<!--<filename>index.html</filename> -->
+			<!--<filename>publish.php</filename>-->
 			<!-- sql文件的存放位置，此component的更新sql就存放于该目录中 -->
-			<folder>sql</folder>
+			<!--<folder>sql</folder>-->
 		</files>
 	</administration>
 
