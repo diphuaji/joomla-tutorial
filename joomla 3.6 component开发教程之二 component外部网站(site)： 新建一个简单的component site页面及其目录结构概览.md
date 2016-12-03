@@ -25,6 +25,8 @@
 ###publish.xml文件
 此文件为component配置文件，每个component都有自己的配置文件，其中包含了该component的基本信息（如：作者联系方式、使用条款等）以及相关文件在zip包中的相对位置；
 
+关于此文件的内容，请登录博主[github主页][github-home]获取
+
 该文件在安装之后会被复制到<code>/opt/joomla-tutorial/administrator/components/com_publish/</code>目录下（见下文）
 ###admin目录
 <pre>
@@ -49,7 +51,7 @@ site部分的路径为 <code>joomla根目录/components/com_XXX/</code>，即：
 ├── controllers
 ├── index.html
 ├── models
-├── publish.ph对照controller中display方法涉及的5个关键步骤，p
+├── publish.php
 └── views
     └── publish
         ├── tmpl
@@ -84,7 +86,7 @@ $controller->redirect();
 * 检查_JEXEC的存在实际上是为了防止直接执行这个文件，实际上这个变量只在joomla的总入口中（即：joomla根目录/index.php）有定义，其作用不言自明
 * [Input API文档][jommla-input]
 
-显然，下面这行代码执对照controller中display方法涉及的5个关键步骤，行了之后的主要逻辑：
+显然，下面这行代码执行了之后的主要逻辑：
 <pre><code>$controller->execute($input->getCmd('task'));</code></pre>
 
 现在有两个问题：
@@ -103,7 +105,7 @@ $controller = JControllerLegacy::getInstance('Publish');
 > 至于怎么拼接的，大家可以看看<code>JControllerLegacy</code>这个类的源码，后续争取提出来说一下，这里考虑篇幅就掠过了
 
 ####controller的执行逻辑
-controller.php：
+**controller.php：**
 <pre><code>
 &lt?php
 /**
@@ -119,7 +121,7 @@ defined('_JEXEC') or die('Restricted access');
  *
  * @since  0.0.1
  */
-class PublishCo对照controller中display方法涉及的5个关键步骤，ntroller extends JControllerLegacy
+class PublishController extends JControllerLegacy
 {
 }
 </code></pre>
@@ -201,7 +203,7 @@ JControllerLegacy：
 
 如上段代码所示，display方法将接力棒递给了view，其中有几个关键步骤：
 
-1. <code>$document</code>是view用来渲染页面的参数，知道即可
+1. <code>$document</code>是view用来解析页面的参数，知道即可
 2. <code>$viewType</code>得到的是'html'
 3. <code>$viewName</code>得到的是'publish'
 4. <code>$viewLayout</code>得到的是'default'
@@ -215,10 +217,11 @@ JControllerLegacy：
 我们至此移步到views目录
 
 ###views目录
-####publish目录
-####
+views目录放的自然是MVC中的V相关文件，这个view目录实际上是一个view的集合，每个view都存放在一个目录中，由于本例中只有一个view，因此只有publish一个目录
 
-答案是：view.html.php，是的，PublishViewPublish类居然定义在view.html.php文件里。
+####publish目录
+
+首先来回答上文中未解答的问题：PublishViewPublish定义在哪？ 答案是：PublishViewPublish定义在view.html.php中
 
 那么另一个问题来了——joomla是怎么找到这个类的？
 
@@ -228,13 +231,14 @@ OK，那我们就看看这个拼接查询逻辑：
 
 >由于字符串拼接的那部分代码看着实在是头晕，故这里只列出了大体逻辑，具体实现方法请看源码
 
-对照controller中display方法涉及的5个关键步骤，view的查询逻辑如下：
+对照controller中display方法涉及的关键步骤，view的查询逻辑如下：
 
 1. 根据<code>$viewName</code>的值('publish')定位到<code>views/publish</code>目录，
-2. 
-3. 
+2. 根据<code>$viewType</code>定位到views/publish/view.html.php
+3. 将该controller自己的类名按照$prefix."Controller的方式分解"，本例中是"PublishController"，因此$prefix就是"Publish"
+4. 拿着3中获取到的prefix在2中定位到的文件查询类<code>PublishViewPublish</code>，这个名字获取的公式是： $prefix."View".ucfirst($viewName)
 
-view.html.php：
+**view.html.php：**
 <pre><code>
 &lt?php
 // No direct access to this file
@@ -247,6 +251,7 @@ defined('_JEXEC') or die('Restricted access');
  */
 class PublishViewPublish extends JViewLegacy
 {
+    private $msg;
     /**
      * Display the Hello World view
      *
@@ -265,16 +270,112 @@ class PublishViewPublish extends JViewLegacy
 }
 </code></pre>
 
+从以上代码中可以看到，PublishViewPublish中的display方法实际上直接调用了父类的（注意这里**$tpl**是空，后面会提到），大家应该猜到了，真正进行页面解析的部分就是这里，就快接近真相了，我们再看父类中的定义：
+
+JViewLegacy：
+
+<pre><code>
+...
+
+    public function display($tpl = null)
+    {
+        $result = $this->loadTemplate($tpl);
+
+        if ($result instanceof Exception)
+        {
+            return $result;
+        }
+
+        echo $result;
+    }
+
+...
+</code></pre>
+
+继续追踪<code>loadTemplate</code>方法：
+
+JViewLegacy：
+
+<pre><code>
+...
+
+    public function loadTemplate($tpl = null)
+    {
+        ...
+        $layout = $this->getLayout();
+        $file = isset($tpl) ? $layout . '_' . $tpl : $layout;
+        ...
+
+        // Load the template script
+        jimport('joomla.filesystem.path');
+        $filetofind = $this->_createFileName('template', array('name' => $file));
+        $this->_template = JPath::find($this->_path['template'], $filetofind);
+
+        // If alternate layout can't be found, fall back to default layout
+        if ($this->_template == false)
+        {
+            $filetofind = $this->_createFileName('', array('name' => 'default' . (isset($tpl) ? '_' . $tpl : $tpl)));
+            $this->_template = JPath::find($this->_path['template'], $filetofind);
+        }
+
+        if ($this->_template != false)
+        {
+            // Unset so as not to introduce into template scope
+            unset($tpl);
+            unset($file);
+
+            // Never allow a 'this' property
+            if (isset($this->this))
+            {
+                unset($this->this);
+            }
+
+            // Start capturing output into a buffer
+            ob_start();
+
+            // Include the requested template filename in the local scope
+            // (this will execute the view logic).
+            include $this->_template;
+
+            // Done with the requested template; get the buffer and
+            // clear it.
+            $this->_output = ob_get_contents();
+            ob_end_clean();
+
+            return $this->_output;
+        }
+        else
+        {
+            throw new Exception(JText::sprintf('JLIB_APPLICATION_ERROR_LAYOUTFILE_NOT_FOUND', $file), 500);
+        }
+    }
+
+...
+</code></pre>
+
+上段代码中略去了寻找模板的逻辑，模板是Joomla CMS中一个非常核心的模块，模板的意义之一就是让同样的内容以不同的风格展现给用户，joomla中的模板相关内容完全值得另开一个教程，因此这里不深入讨论。现在只要记住我们只有一套模板就好，这套模板放在 **<code>views/pubish/tmpl</code>** 中。
+
+让我们简单梳理下上段代码的逻辑：
+
+1. 找到要解析的文件名$file，由于$tpl是空，$file就是$layout，而getLayout()默认返回"default"（JControllerLegacy 的display方法早已在获取view的时候将"default"作为参数传了进去，详见 **_从controller到view_**；另外，default经常被作为joomla中默认文件的名字，后面还会看到），所以<>code$file="default"</code>
+2. <code>$_template</code>属性就是最终要include进来的模板文件名(php 文件本身就是一个网页模板，也是php语言的设计初衷之一)，值为"default.php"
+3. 在template目录中查找"default.php"文件是否存在
+4. 由于在tmpl目录中存在default.php，则通过include引用（否则返回500错误页面），因此可以直接调用在<code>PublishViewPublish</code>中的成员，如本例中的$msg
+
+>这里注意：为了将解析结果返回，而不是直接打印，上面用到了php的<code>ob_start、ob_get_contents、ob_end_clean</code>方法将结果赋值给<code>$_output</code>属性传回
 
 
+至此，component的整个流程就走完了，访问：http://172.0.0.1/index.php?option=com_publish 就可以看到 Hello World! 了
 
+##小结
 
+本章以site部分为例，介绍了component的运作方式，并穿插介绍了相关的文件，另外还简单分析了相关joomla源码；除了MVC中M，C和V都已介绍，M将在下章讲解。
 
 在整个joomla的component开发过程中，文件命名都非常重要，很多时候错一个字母，很可能就会导致该component的某些部分失效甚至报错
 >关于命名这块，各种潜规则，坑点不少；
 作为二次开发人员，当然应该去看joomla源码，从而了解一些深层次的运作机制，但是像文件名拼接查找逻辑这种只要稍微在文档中提示一下的东西，本就应该专门做一个专题来说明，写几条简单的规则，大家一看都能明白，皆大欢喜，不过博主貌似没有发现类似的东西。
 
-
 #参考文献
 * [Developing a MVC Component/Introduction](https://docs.joomla.org/Developing_a_Model-View-Controller_Component_-_Part_1)
 [jommla-input]:https://api.joomla.org/cms-3/classes/JApplicationCms.html
+[github-home]:https://github.com/diphuaji/joomla-tutorial/tree/master/lesson-1/components/com_publish

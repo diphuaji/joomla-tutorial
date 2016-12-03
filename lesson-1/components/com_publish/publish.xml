@@ -16,7 +16,7 @@
 
 	<update> <!-- 用于该component更新的sql文件; New since J2.5 -->
 		<schemas>
-			<schemapath type="mysql">sql/updates/mysql</schemapath>
+			<schemapath type="mysql">sql/updates/mysql/</schemapath>
 		</schemas>
 	</update>
 
@@ -25,7 +25,6 @@
 		可以看到，site目录下的文件和文件名会在安装的时候被复制到joomla中，当然此处取名site只是为了
 		方便记忆，当然你也可以起名为mysite，只要jooma能在相应的目录中找到下列文件或文件夹即可 -->
 	<files folder="site">
-		<filename>index.html</filename>
 		<filename>publish.php</filename>
 		<filename>controller.php</filename>
 		<folder>views</folder>
@@ -44,7 +43,7 @@
 			<!--<filename>index.html</filename> -->
 			<!--<filename>publish.php</filename>-->
 			<!-- sql文件的存放位置，此component的更新sql就存放于该目录中 -->
-			<!--<folder>sql</folder>-->
+			<folder>sql</folder>
 		</files>
 	</administration>
 
