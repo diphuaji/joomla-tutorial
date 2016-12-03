@@ -59,9 +59,9 @@ site部分的路径为 <code>joomla根目录/components/com_XXX/</code>，即：
         └── view.html.php
 </pre>
 ##site目录初探
-从上文中的目录概览中我们可以看出，除了配置文件之外，一个component包含两大部分（见教程一）
+从上文中的目录概览中我们可以看出，除了配置文件之外，一个component包含两大部分（见教程一）。
 ###component入口：publish.php
-每个component都有且只有一个入口，在本教程中，这个文件的名字就是<code>publish.php</code>，要注意的是：名字不能错，不然joomla程序就找不到该component的位置了，我们为它写的所有逻辑都无法得到体现；
+每个component都有且只有一个入口，在本教程中，这个文件的名字就是<code>publish.php</code>，要注意的是：名字不能错，不然joomla程序就找不到该component的位置了，我们为它写的所有逻辑都无法得到体现。
 
 我们来看下这个入口文件的内容：
 <pre><code>
@@ -101,8 +101,8 @@ $controller->redirect();
 $controller = JControllerLegacy::getInstance('Publish'); 
 </code></pre>
 
-这里Joomla实际上是后续通过字符串拼接找到了我们在<code>controller.php</code>中定义的<code>PublishController</code>类
-> 至于怎么拼接的，大家可以看看<code>JControllerLegacy</code>这个类的源码，后续争取提出来说一下，这里考虑篇幅就掠过了
+这里Joomla实际上是后续通过字符串拼接找到了我们在<code>controller.php</code>中定义的<code>PublishController</code>类。
+> 至于怎么拼接的，大家可以看看<code>JControllerLegacy</code>这个类的源码，后续争取提出来说一下，这里考虑篇幅就掠过了。
 
 ####controller的执行逻辑
 **controller.php：**
@@ -214,14 +214,14 @@ JControllerLegacy：
 
 至此我们将目光转移到view上，那么问题来了——PublishViewPublish类就定定义在哪？
 
-我们至此移步到views目录
+我们至此移步到views目录。
 
 ###views目录
-views目录放的自然是MVC中的V相关文件，这个view目录实际上是一个view的集合，每个view都存放在一个目录中，由于本例中只有一个view，因此只有publish一个目录
+views目录放的自然是MVC中的V相关文件，这个view目录实际上是一个view的集合，每个view都存放在一个目录中，由于本例中只有一个view，因此只有publish一个目录。
 
 ####publish目录
 
-首先来回答上文中未解答的问题：PublishViewPublish定义在哪？ 答案是：PublishViewPublish定义在view.html.php中
+首先来回答上文中未解答的问题：PublishViewPublish定义在哪？ 答案是：PublishViewPublish定义在view.html.php中。
 
 那么另一个问题来了——joomla是怎么找到这个类的？
 
@@ -233,7 +233,7 @@ OK，那我们就看看这个拼接查询逻辑：
 
 对照controller中display方法涉及的关键步骤，view的查询逻辑如下：
 
-1. 根据<code>$viewName</code>的值('publish')定位到<code>views/publish</code>目录，
+1. 根据<code>$viewName</code>的值('publish')定位到<code>views/publish</code>目录
 2. 根据<code>$viewType</code>定位到views/publish/view.html.php
 3. 将该controller自己的类名按照$prefix."Controller的方式分解"，本例中是"PublishController"，因此$prefix就是"Publish"
 4. 拿着3中获取到的prefix在2中定位到的文件查询类<code>PublishViewPublish</code>，这个名字获取的公式是： $prefix."View".ucfirst($viewName)
@@ -365,13 +365,13 @@ JViewLegacy：
 >这里注意：为了将解析结果返回，而不是直接打印，上面用到了php的<code>ob_start、ob_get_contents、ob_end_clean</code>方法将结果赋值给<code>$_output</code>属性传回
 
 
-至此，component的整个流程就走完了，访问：http://172.0.0.1/index.php?option=com_publish 就可以看到 Hello World! 了
+至此，component的整个流程就走完了，访问：http://172.0.0.1/index.php?option=com_publish 就可以看到 Hello World! 了。
 
 ##小结
 
 本章以site部分为例，介绍了component的运作方式，并穿插介绍了相关的文件，另外还简单分析了相关joomla源码；除了MVC中M，C和V都已介绍，M将在下章讲解。
 
-在整个joomla的component开发过程中，文件命名都非常重要，很多时候错一个字母，很可能就会导致该component的某些部分失效甚至报错
+在整个joomla的component开发过程中，文件命名都非常重要，很多时候错一个字母，很可能就会导致该component的某些部分失效甚至报错。
 >关于命名这块，各种潜规则，坑点不少；
 作为二次开发人员，当然应该去看joomla源码，从而了解一些深层次的运作机制，但是像文件名拼接查找逻辑这种只要稍微在文档中提示一下的东西，本就应该专门做一个专题来说明，写几条简单的规则，大家一看都能明白，皆大欢喜，不过博主貌似没有发现类似的东西。
 
